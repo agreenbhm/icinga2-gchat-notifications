@@ -5,85 +5,34 @@
   Ported to GChat (from Slack) by: agreenbhm
   -->
 
-# icinga2-gchat-notifications
+# icinga2-slack-notifications (for Google Chat)
 Icinga2 notification integration with Google Chat
 
 ## Overview
 
-Native, easy to use Icinga2 `NotificationCommand` to send Host and Service notifications to pre-configured Slack channel - with only 1 external dependency: `curl`
-
-Also available on <a href="https://exchange.icinga.com/richardhauswald/icinga2-slack-notifications" target="_blank">Icinga2 exchange portal</a>
+Native, easy to use Icinga2 `NotificationCommand` to send Host and Service notifications to pre-configured Google Chat channel via Webhooks - with only 1 external dependency: `curl`
 
 ## What will I get?
-* Awesome Slack notifications:
+* Awesome Google Chat notifications:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/agreenbhm/icinga2-gchat-notifications/master/docs/gchat-icinga-notification-example.png" width="600">
+  <img src="https://raw.githubusercontent.com/agreenbhm/icinga2-slack-notifications/master/docs/gchat-icinga-notification-example.png" width="600">
 </p>
 
-* Mobile Icinga monitoring alerts as well:
-
-<p align="center">
-  <img src="https://github.com/nisabek/icinga2-slack-notifications/raw/master/docs/Notification-Examples-mobile.png" width="400">
-</p>
-
-* Notifications inside Slack about your Host and Service state changes
+* Notifications inside GChat about your Host and Service state changes
 * In case of failure get notified with the nicely-formatted output of the failing check
 * Easy integration with Icinga2
 * Only native Icinga2 features are used, no bash, perl, etc - keeps your server/virtual machine/docker instances small
 * Debian ready-to-use package to reduce maintenance and automated installation effort
 * Uses Lambdas!
 
-## Why another approach?
-
-We found the following 2 existing Icinga2 to Slack integrations. 
-
-* https://github.com/spjmurray/slack-icinga2
-
-  This plugin provides a polling interface towards Icinga2, giving the possibility to query the Icinga2 API and get information. 
-  
-  Since we cannot open our firewalls to enable access for slack servers to our Icinga2 instances, we need to
-  have Icinga2 sending push notifications to Slack to report our Host and Service state changes.
-* https://github.com/jjethwa/icinga2-slack-notification
-  
-  The plugin provides the possibility to send NotificationCommand to slack, however we found the following 
-  downsides to be show stoppers for us:
-   * Does not use Lambdas!
-   * The Integration is time consuming and cumbersome
-   * The author requires you to modify his source files in order to configure the slack webhook and channel. So we'd 
-   have to configure everything again when we have to install an update of that integration.
-   * No Debian package available, which leads to increased installation and maintenance effort.
-   * Numerous bugs since the host output is not properly encoded:
-     * as shell argument before it's passed to the shell script
-     * as JSON before it's send to Slacks REST API
-
 ## Installation 
-
-### Installation using Debian package
-
-We use [reprepro](https://mirrorer.alioth.debian.org/) to distribute our package from github.
-You would need to install `apt-transport-https` that supports adding an `https` based repository to the debian repo list.
-
-here are the steps to perform:
-
-```
-apt-get install -y apt-transport-https
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 10779AB4
-add-apt-repository "deb https://raw.githubusercontent.com/nisabek/icinga2-slack-notifications/master/reprepro general main"
-apt-get update
-```
-
-You are now ready to install the plugin with 
-
-`apt-get install icinga2-slack-notifications`
-
-This will create the plugin files in the correct `icinga2` conf directory. 
 
 ### Installation using git
 
 1. clone the repository under your Icinga2 `/etc/icinga2/conf.d` directory
  
- `git clone git@github.com:nisabek/icinga2-slack-notifications.git /etc/icinga2/conf.d/`
+ `git clone git@github.com:agreenbhm/icinga2-slack-notifications.git /etc/icinga2/conf.d/`
 
 2. Use the `slack-notifications-user-configuration.conf.template` file as reference to configure your Slack Webhook URL and Icinga2 Base URL to create your own
  `slack-notifications-user-configuration.conf`
