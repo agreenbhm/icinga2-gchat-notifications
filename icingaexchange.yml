@@ -1,6 +1,6 @@
-name: icinga2-slack-notifications
+name: icinga2-slack-notifications_for-google-chat
 description: "file:///README.md"
-url: "https://github.com/nisabek/icinga2-slack-notifications"
+url: "https://github.com/agreenbhm/icinga2-slack-notifications"
 tags: Slack, notification, NotificationCommand, Monitoring, CheckCommand, Alarm, Alerting, Alert
 vendor: Icinga
 target: Icinga Web 2
@@ -8,8 +8,8 @@ type: Notification, Notification Command
 license: apache2
 releases:
   -
-    name: 1.0.4
-    description: "1.0.4 Release"
+    name: 1.0.0
+    description: "1.0.0 Release"
     files:
       -
         name: slack-notifications-command.conf
