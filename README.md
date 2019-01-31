@@ -36,7 +36,7 @@ NOTE: File and variable references to the original plugin (written for Slack) ha
  
  `git clone https://github.com/agreenbhm/icinga2-slack-notifications.git /etc/icinga2/conf.d/`
 
-2. Use the `slack-notifications-user-configuration.conf.template` (located in /etc/icinga2/conf.d/icinga2-slack-notifications/src/slack-notifications) file as reference to configure your Slack Webhook URL and Icinga2 Base URL to create your own
+2. Use the `slack-notifications-user-configuration.conf.template` (located in /etc/icinga2/conf.d/icinga2-slack-notifications/src/slack-notifications) file as reference to configure your GChat Webhook URL and Icinga2 Base URL to create your own
  `slack-notifications-user-configuration.conf`
  
  `cp /etc/icinga2/conf.d/icinga2-slack-notifications/src/slack-notifications/slack-notifications-user-configuration.conf.template /etc/icinga2/conf.d/icinga2-slack-notifications/src/slack-notifications/slack-notifications-user-configuration.conf`
@@ -72,7 +72,7 @@ In order to enable a feature use
 template Notification "slack-notifications-user-configuration" {
     import "slack-notifications-default-configuration"
 
-    vars.slack_notifications_webhook_url = "<YOUR SLACK WEBHOOK URL>, e.g. https://hooks.slack.com/services/TOKEN1/TOKEN2"
+    vars.slack_notifications_webhook_url = "<YOUR GCHAT WEBHOOK URL>, e.g. https://chat.googleapis.com/v1/spaces/AAAAAAAA//messages?key=ABCDEFGHIJKLMNOP%3D"
     vars.slack_notifications_icinga2_base_url = "<YOUR ICINGA2 BASE URL>, e.g. http://icinga-web.yourcompany.com/icingaweb2"
 }
 ...
@@ -119,7 +119,7 @@ _Example channel name configuration for Service notifications_
 template Notification "slack-notifications-user-configuration" {
     import "slack-notifications-default-configuration"
 
-    vars.slack_notifications_webhook_url = "<YOUR SLACK WEBHOOK URL>, e.g. https://hooks.slack.com/services/TOKEN1/TOKEN2"
+    vars.slack_notifications_webhook_url = "<YOUR GCHAT WEBHOOK URL>, e.g. https://chat.googleapis.com/v1/spaces/AAAAAAAA//messages?key=ABCDEFGHIJKLMNOP%3D"
     vars.slack_notifications_icinga2_base_url = "<YOUR ICINGA2 BASE URL>, e.g. http://icinga-web.yourcompany.com/icingaweb2"
 }
 
@@ -133,48 +133,6 @@ template Notification "slack-notifications-user-configuration-services" {
     import "slack-notifications-default-configuration-services"
 
     interval = 3m
-    
-    vars.slack_notifications_channel = "#monitoring_alerts_for_service"
-}
-```
-
-You can choose to override the whole icon dictionary, or override specific types only:
-
-_Example override the whole icon dictionary_
-
-```
-template Notification "slack-notifications-user-configuration" {
-    import "slack-notifications-default-configuration"
-
-    vars.slack_notifications_webhook_url = "https://hooks.slack.com/services/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"
-    vars.slack_notifications_icinga2_base_url = "http://localhost:80/icingaweb2"
-    vars.slack_notifications_channel = "#icinga2-private-test"
-    vars.slack_notifications_icon_dictionary = {
-       "DOWNTIMEREMOVED" = "leftwards_arrow_with_hook",
-       "ACKNOWLEDGEMENT" = "ballot_box_with_check",
-       "PROBLEM" = "bomb",
-       "RECOVERY" = "large_blue_circle",
-       "DOWNTIMESTART" = "up",
-       "DOWNTIMEEND" = "arrow_double_down",
-       "FLAPPINGSTART" = "small_red_triangle",
-       "FLAPPINGEND" = "small_red_triangle_down",
-       "CUSTOM" = "speaking_head_in_silhouette"
-    }    
-    ...
-```
-
-_Example override specific type_
-
-```
-template Notification "slack-notifications-user-configuration" {
-    import "slack-notifications-default-configuration"
-
-    vars.slack_notifications_webhook_url = "https://hooks.slack.com/services/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"
-    vars.slack_notifications_icinga2_base_url = "http://localhost:80/icingaweb2"
-    vars.slack_notifications_channel = "#icinga2-private-test"
-
-    vars.slack_notifications_icon_dictionary.CUSTOM = "cherries"
-    ...
 }
 ```
 
@@ -214,7 +172,7 @@ Use the following grep for troubleshooting:
 `tail -f /var/log/icinga2/debug.log | grep "warning/PluginNotificationTask\|slack-notifications"`
 
 ## Useful links
-- [Setup Slack Webhook](https://api.slack.com/incoming-webhooks)
+- [Setup GChat Webhook](https://developers.google.com/hangouts/chat/how-tos/webhooks#setting_up_an_incoming_webhook)
 - [Enable Icinga2 Debug logging](https://docs.icinga.com/icinga2/latest/doc/module/icinga2/chapter/troubleshooting)
 - [NotificationCommand of Icinga2](https://docs.icinga.com/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-notificationcommand)
 - [Overriding template definitions of Icinga2](https://docs.icinga.com/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#object-inheritance-using-templates)
