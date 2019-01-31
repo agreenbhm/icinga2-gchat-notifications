@@ -34,9 +34,9 @@ NOTE: File and variable references to the original plugin (written for Slack) ha
 
 1. clone the repository under your Icinga2 `/etc/icinga2/conf.d` directory
  
- `git clone git@github.com:agreenbhm/icinga2-slack-notifications.git /etc/icinga2/conf.d/`
+ `git clone https://github.com/agreenbhm/icinga2-slack-notifications.git /etc/icinga2/conf.d/`
 
-2. Use the `slack-notifications-user-configuration.conf.template` file as reference to configure your Slack Webhook URL and Icinga2 Base URL to create your own
+2. Use the `slack-notifications-user-configuration.conf.template` (located in /etc/icinga2/conf.d/icinga2-slack-notifications/src) file as reference to configure your Slack Webhook URL and Icinga2 Base URL to create your own
  `slack-notifications-user-configuration.conf`
  
  `cp /etc/icinga2/conf.d/slack-notifications/slack-notifications-user-configuration.conf.template /etc/icinga2/conf.d/slack-notifications/slack-notifications-user-configuration.conf`
