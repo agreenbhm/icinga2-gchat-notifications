@@ -10,99 +10,48 @@ Icinga2 notification integration with Google Chat
 
 ## Overview
 
-Native, easy to use Icinga2 `NotificationCommand` to send Host and Service notifications to pre-configured Slack channel - with only 1 external dependency: `curl`
-
-Also available on <a href="https://exchange.icinga.com/richardhauswald/icinga2-slack-notifications" target="_blank">Icinga2 exchange portal</a>
+Native, easy to use Icinga2 `NotificationCommand` to send Host and Service notifications to pre-configured Google Chat channel via Webhooks - with only 1 external dependency: `curl`
 
 ## What will I get?
-* Awesome Slack notifications:
+* Awesome Google Chat notifications:
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/agreenbhm/icinga2-gchat-notifications/master/docs/gchat-icinga-notification-example.png" width="600">
 </p>
 
-* Mobile Icinga monitoring alerts as well:
-
-<p align="center">
-  <img src="https://github.com/nisabek/icinga2-slack-notifications/raw/master/docs/Notification-Examples-mobile.png" width="400">
-</p>
-
-* Notifications inside Slack about your Host and Service state changes
+* Notifications inside Google Chat about your Host and Service state changes
 * In case of failure get notified with the nicely-formatted output of the failing check
 * Easy integration with Icinga2
 * Only native Icinga2 features are used, no bash, perl, etc - keeps your server/virtual machine/docker instances small
 * Debian ready-to-use package to reduce maintenance and automated installation effort
 * Uses Lambdas!
 
-## Why another approach?
-
-We found the following 2 existing Icinga2 to Slack integrations. 
-
-* https://github.com/spjmurray/slack-icinga2
-
-  This plugin provides a polling interface towards Icinga2, giving the possibility to query the Icinga2 API and get information. 
-  
-  Since we cannot open our firewalls to enable access for slack servers to our Icinga2 instances, we need to
-  have Icinga2 sending push notifications to Slack to report our Host and Service state changes.
-* https://github.com/jjethwa/icinga2-slack-notification
-  
-  The plugin provides the possibility to send NotificationCommand to slack, however we found the following 
-  downsides to be show stoppers for us:
-   * Does not use Lambdas!
-   * The Integration is time consuming and cumbersome
-   * The author requires you to modify his source files in order to configure the slack webhook and channel. So we'd 
-   have to configure everything again when we have to install an update of that integration.
-   * No Debian package available, which leads to increased installation and maintenance effort.
-   * Numerous bugs since the host output is not properly encoded:
-     * as shell argument before it's passed to the shell script
-     * as JSON before it's send to Slacks REST API
-
 ## Installation 
-
-### Installation using Debian package
-
-We use [reprepro](https://mirrorer.alioth.debian.org/) to distribute our package from github.
-You would need to install `apt-transport-https` that supports adding an `https` based repository to the debian repo list.
-
-here are the steps to perform:
-
-```
-apt-get install -y apt-transport-https
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 10779AB4
-add-apt-repository "deb https://raw.githubusercontent.com/nisabek/icinga2-slack-notifications/master/reprepro general main"
-apt-get update
-```
-
-You are now ready to install the plugin with 
-
-`apt-get install icinga2-slack-notifications`
-
-This will create the plugin files in the correct `icinga2` conf directory. 
 
 ### Installation using git
 
 1. clone the repository under your Icinga2 `/etc/icinga2/conf.d` directory
  
- `git clone git@github.com:nisabek/icinga2-slack-notifications.git /etc/icinga2/conf.d/`
+ `git clone git@github.com:agreenbhm/icinga2-chat-notifications.git /etc/icinga2/conf.d/`
 
-2. Use the `slack-notifications-user-configuration.conf.template` file as reference to configure your Slack Webhook URL and Icinga2 Base URL to create your own
- `slack-notifications-user-configuration.conf`
+2. Use the `gchat-notifications-user-configuration.conf.template` file as reference to configure your Google Chat Webhook URL and Icinga2 Base URL to create your own
+ `gchat-notifications-user-configuration.conf`
  
- `cp /etc/icinga2/conf.d/slack-notifications/slack-notifications-user-configuration.conf.template /etc/icinga2/conf.d/slack-notifications/slack-notifications-user-configuration.conf`
+ `cp /etc/icinga2/conf.d/gchat-notifications/gchat-notifications-user-configuration.conf.template /etc/icinga2/conf.d/gchat-notifications/gchat-notifications-user-configuration.conf`
  
 3. Fix permissions
  
  ```
-    chown -R root:nagios /etc/icinga2/conf.d/slack-notifications
-    chmod 0750 /etc/icinga2/conf.d/slack-notifications
-    chmod 0640 /etc/icinga2/conf.d/slack-notifications/*
+    chown -R root:nagios /etc/icinga2/conf.d/gchat-notifications
+    chmod 0750 /etc/icinga2/conf.d/gchat-notifications
+    chmod 0640 /etc/icinga2/conf.d/gchat-notifications/*
  ```
 
 ### Configuration 
  
 #### Icinga2 features
 
-In order for the slack-notifications to work you need at least the following icinga2 features enabled
+In order for the gchat-notifications to work you need at least the following icinga2 features enabled
 
 `checker command notification`
 
@@ -116,18 +65,18 @@ In order to enable a feature use
 
 #### Notification configuration
 
-1. Configure Slack Webhook and Icinga2 web URLs in `/etc/icinga2/conf.d/slack-notifications/slack-notifications-user-configuration.conf`
+1. Configure Google Chat Webhook and Icinga2 web URLs in `/etc/icinga2/conf.d/gchat-notifications/gchat-notifications-user-configuration.conf`
 ```
-template Notification "slack-notifications-user-configuration" {
-    import "slack-notifications-default-configuration"
+template Notification "gchat-notifications-user-configuration" {
+    import "gchat-notifications-default-configuration"
 
-    vars.slack_notifications_webhook_url = "<YOUR SLACK WEBHOOK URL>, e.g. https://hooks.slack.com/services/TOKEN1/TOKEN2"
-    vars.slack_notifications_icinga2_base_url = "<YOUR ICINGA2 BASE URL>, e.g. http://icinga-web.yourcompany.com/icingaweb2"
+    vars.gchat_notifications_webhook_url = "<YOUR GCHAT WEBHOOK URL>, e.g. https://chat.googleapis.com/v1/spaces/SPACEIDHERE"
+    vars.gchat_notifications_icinga2_base_url = "<YOUR ICINGA2 BASE URL>, e.g. http://icinga-web.yourcompany.com/icingaweb2"
 }
 ...
 ```
 
-2. In order to enable the slack-notifications **for Services** add `vars.slack_notifications = "enabled"` to your Service template, e.g. in `/etc/icinga2/conf.d/templates.conf`
+2. In order to enable the gchat-notifications **for Services** add `vars.gchat_notifications = "enabled"` to your Service template, e.g. in `/etc/icinga2/conf.d/templates.conf`
 
 ```
  template Service "generic-service" {
@@ -135,11 +84,11 @@ template Notification "slack-notifications-user-configuration" {
    check_interval = 1m
    retry_interval = 30s
  
-   vars.slack_notifications = "enabled"
+   vars.gchat_notifications = "enabled"
  }
  ```
 
-In order to enable the slack-notifications **for Hosts** add `vars.slack_notifications = "enabled"` to your Host template, e.g. in `/etc/icinga2/conf.d/templates.conf`
+In order to enable the gchat-notifications **for Hosts** add `vars.gchat_notifications = "enabled"` to your Host template, e.g. in `/etc/icinga2/conf.d/templates.conf`
 
 ```
  template Host "generic-host" {
@@ -147,7 +96,7 @@ In order to enable the slack-notifications **for Hosts** add `vars.slack_notific
    check_interval = 1m
    retry_interval = 30s
  
-   vars.slack_notifications = "enabled"
+   vars.gchat_notifications = "enabled"
  }
  ```
 
