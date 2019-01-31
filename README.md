@@ -1,11 +1,12 @@
 <!--
-  Title: Icinga Slack Notifications
-  Description: Icinga 2 notification integration with slack
-  Author: nisabek richard.hauswald
+  Title: Icinga GChat Notifications
+  Description: Icinga 2 notification integration with Google Chat
+  Original Authors: nisabek richard.hauswald
+  Ported to GChat (from Slack) by: agreenbhm
   -->
 
-# icinga2-slack-notifications
-Icinga2 notification integration with slack
+# icinga2-gchat-notifications
+Icinga2 notification integration with Google Chat
 
 ## Overview
 
@@ -17,7 +18,7 @@ Also available on <a href="https://exchange.icinga.com/richardhauswald/icinga2-s
 * Awesome Slack notifications:
 
 <p align="center">
-  <img src="https://github.com/nisabek/icinga2-slack-notifications/raw/master/docs/Notification-Examples.png" width="600">
+  <img src="https://raw.githubusercontent.com/agreenbhm/icinga2-gchat-notifications/master/docs/gchat-icinga-notification-example.png" width="600">
 </p>
 
 * Mobile Icinga monitoring alerts as well:
