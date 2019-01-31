@@ -1,7 +1,7 @@
 template Notification "slack-notifications-user-configuration" {
     import "slack-notifications-default-configuration"
 
-    vars.slack_notifications_webhook_url = "<YOUR SLACK WEBHOOK URL>, e.g. https://hooks.slack.com/services/TOKEN1/TOKEN2"
+    vars.slack_notifications_webhook_url = "<YOUR SLACK WEBHOOK URL>, e.g. https://chat.googleapis.com/v1/spaces/AAAAAAAA/messages?key=ABCDEFGHIJKLMNOP%3D"
     vars.slack_notifications_icinga2_base_url = "<YOUR ICINGA2 BASE URL>, e.g. http://icinga-web.yourcompany.com/icingaweb2"
 }
 

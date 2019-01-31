@@ -15,14 +15,14 @@ releases:
         name: slack-notifications-command.conf
         url: "file:///src/slack-notifications/slack-notifications-command.conf"
         description: "NotificationCommand implementation for slack-notifications"
-        checksum: 7ebc382c6d0db1b1348367f6be218c40
+        checksum: 4e2b48e65abbcbb4266beadb514e4207
       -
         name: slack-notifications-configuration.conf
         url: "file:///src/slack-notifications/slack-notifications-configuration.conf"
         description: "NotificationCommand configurations for slack-notifications"
-        checksum: 4dee798b706ef6e69212da3e6b4f3d18
+        checksum: a06a0b4d79cbd412e951c1fc4b1f24a3
       -
         name: slack-notifications-user-configuration.conf.template
         url: "file:///src/slack-notifications/slack-notifications-user-configuration.conf.template"
         description: "User configuration template for slack-notifications"
-        checksum: b847baac9208e52ec918c6be4fcbfa91
+        checksum: 14aff120944bc61f801690de5dd0ba2a
