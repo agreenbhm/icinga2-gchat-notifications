@@ -14,6 +14,8 @@ Native, easy to use Icinga2 `NotificationCommand` to send Host and Service notif
 
 NOTE: File and variable references to the original plugin (written for Slack) have been left to simplify future modification and/or pull requests.
 
+Also available on [Icinga Exchange](https://exchange.icinga.com/agreenbhm/icinga2-slack-notifications%20%28for%20Google%20Chat%29/releases)
+
 ## What will I get?
 * Awesome Google Chat notifications:
 
