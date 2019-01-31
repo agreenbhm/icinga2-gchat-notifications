@@ -36,17 +36,17 @@ NOTE: File and variable references to the original plugin (written for Slack) ha
  
  `git clone https://github.com/agreenbhm/icinga2-slack-notifications.git /etc/icinga2/conf.d/`
 
-2. Use the `slack-notifications-user-configuration.conf.template` (located in /etc/icinga2/conf.d/icinga2-slack-notifications/src) file as reference to configure your Slack Webhook URL and Icinga2 Base URL to create your own
+2. Use the `slack-notifications-user-configuration.conf.template` (located in /etc/icinga2/conf.d/icinga2-slack-notifications/src/slack-notifications) file as reference to configure your Slack Webhook URL and Icinga2 Base URL to create your own
  `slack-notifications-user-configuration.conf`
  
- `cp /etc/icinga2/conf.d/slack-notifications/slack-notifications-user-configuration.conf.template /etc/icinga2/conf.d/slack-notifications/slack-notifications-user-configuration.conf`
+ `cp /etc/icinga2/conf.d/icinga2-slack-notifications/src/slack-notifications/slack-notifications-user-configuration.conf.template /etc/icinga2/conf.d/icinga2-slack-notifications/src/slack-notifications/slack-notifications-user-configuration.conf`
  
 3. Fix permissions
  
  ```
-    chown -R root:nagios /etc/icinga2/conf.d/slack-notifications
-    chmod 0750 /etc/icinga2/conf.d/slack-notifications
-    chmod 0640 /etc/icinga2/conf.d/slack-notifications/*
+    chown -R root:nagios /etc/icinga2/conf.d/icinga2-slack-notifications
+    chmod 0750 /etc/icinga2/conf.d/icinga2-slack-notifications
+    chmod 0640 /etc/icinga2/conf.d/icinga2-slack-notifications/*
  ```
 
 ### Configuration 
@@ -67,7 +67,7 @@ In order to enable a feature use
 
 #### Notification configuration
 
-1. Configure Slack Webhook and Icinga2 web URLs in `/etc/icinga2/conf.d/slack-notifications/slack-notifications-user-configuration.conf`
+1. Configure Slack Webhook and Icinga2 web URLs in `/etc/icinga2/conf.d/icinga2-slack-notifications/src/slack-notifications/slack-notifications-user-configuration.conf`
 ```
 template Notification "slack-notifications-user-configuration" {
     import "slack-notifications-default-configuration"
@@ -105,30 +105,6 @@ In order to enable the slack-notifications **for Hosts** add `vars.slack_notific
 Make sure to restart icinga after the changes
 
 `systemctl restart icinga2`
-
-2. Further customizations [_optional_]
-
-You can customize the following parameters of slack-notifications :
-  * slack_notifications_channel [Default: `#monitoring_alerts`]
-  * slack_notifications_botname [Default: `icinga2`]
-  * slack_notifications_plugin_output_max_length [Default: `3500`]
-  * slack_notifications_icon_dictionary [Default:
-   ```
-     {
-         "DOWNTIMEREMOVED" = "leftwards_arrow_with_hook",
-         "ACKNOWLEDGEMENT" = "ballot_box_with_check",
-         "PROBLEM" = "red_circle",
-         "RECOVERY" = "large_blue_circle",
-         "DOWNTIMESTART" = "arrow_up_small",
-         "DOWNTIMEEND" = "arrow_down_small",
-         "FLAPPINGSTART" = "small_red_triangle",
-         "FLAPPINGEND" = "small_red_triangle_down",
-         "CUSTOM" = "speaking_head_in_silhouette"
-     }
-   ```
-  ]
-
-In order to do so, place the desired parameter into `slack-notifications-user-configuration.conf` file.
 
 Note 
 > Objects as well as templates themselves can import an arbitrary number of other templates. Attributes inherited from a template can be overridden in the object if necessary.
@@ -222,27 +198,7 @@ The implementation can be found in `slack-notifications-command.conf` and it use
 
 ## Testing
 
-Since the official docker image of icinga2 seems not to be maintained, we've been using [jordan's icinga2 image](https://hub.docker.com/r/jordan/icinga2/)
-to test the notifications manually.
-
-Usual procedure for us to test the plugin is to 
-
-* configure the `src/slack-notifications/slack-notifications-configuration.conf` file according to documentation
-* configure a test `src/templates.conf` which contains the slack-notifications enabled for host and/or service
-* run the `jordan/icinga2` with an empty volume at first
-* copy the configurations to relevant directories
-* restart the container
-
-```bash
- docker run -p 8081:80 --name slack-enabled-icinga2 -v $PWD/icinga2-docker-volume:/etc/icinga2 -idt jordan/icinga2:latest
- docker cp src/templates.conf slack-enabled-icinga2:/etc/icinga2/conf.d/
- docker cp src/slack-notifications slack-enabled-icinga2:/etc/icinga2/conf.d/
- docker restart slack-enabled-icinga2
-```
-
-after that navigate to `http://localhost:8081/icingaweb2` and try out some notifications. 
-
-We understand that this is far from automated testing, and we will be happy to any contributions that would improve the procedure.
+To test if notifications are working, go into IcingaWeb2, select a host or service, and choose "Notification" to manually initiate a notification.
 
 ## Troubleshooting
 The slack-notifications command provides detailed debug logs. In order to see them, make sure the `debuglog` feature of icinga2 is enabled.
