@@ -8,6 +8,9 @@
 # icinga2-slack-notifications (for Google Chat)
 Icinga2 notification integration with Google Chat
 
+Original Authors: nisabek richard.hauswald
+Ported to GChat (from Slack) by: agreenbhm
+  
 ## Overview
 
 Native, easy to use Icinga2 `NotificationCommand` to send Host and Service notifications to pre-configured Google Chat channel via Webhooks - with only 1 external dependency: `curl`
