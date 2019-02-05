@@ -9,6 +9,7 @@
 Icinga2 notification integration with Google Chat
 
 Original Authors: nisabek richard.hauswald
+
 Ported to GChat (from Slack) by: agreenbhm
   
 ## Overview
